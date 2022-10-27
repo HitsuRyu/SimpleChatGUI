@@ -13,7 +13,7 @@ mainwindow::mainwindow(QWidget *parent)
     file.close();
 
     m_db = QSqlDatabase::addDatabase("QMYSQL");
-    m_db.setHostName("localhost");
+    m_db.setHostName("95.165.30.93");
     m_db.setDatabaseName("SimpleChat_db");
     m_db.setUserName("GUI");
     m_db.setPassword("gui_password");
