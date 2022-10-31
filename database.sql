@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `Login_Pwd`;
 CREATE TABLE `Login_Pwd` (
   `Login` int NOT NULL,
   `Password` varchar(40) DEFAULT NULL,
+  `Permission` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`Login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -35,7 +36,7 @@ CREATE TABLE `Login_Pwd` (
 
 LOCK TABLES `Login_Pwd` WRITE;
 /*!40000 ALTER TABLE `Login_Pwd` DISABLE KEYS */;
-INSERT INTO `Login_Pwd` VALUES (1000,'30274c47903bd1bac7633bbf09743149ebab805f'),(1001,'6cadbca0a4c252abdeba4b2a53420f163ec32ce3'),(1002,'36f1372b5d5550695bfd83f4c97dac4ecdff5b80'),(1003,'b87ed8d4b40264bc6026b7e782fed5686a51fb80'),(1004,'33464fdeb5d05b4701c3506284543292783086f5'),(1005,'9ba97b763f34c8904f202854a82f63b12169a395'),(1006,'e21dfc1b2adaa61f78992d42b085508f13147efc'),(1007,'a203fafded5227a15d51e41084ee236187bd4ca1'),(1008,'7584b4d55131d42b8f026f109ddafaed1725187b'),(1009,'be40a26e2411dd9ec88218c0f53b9b8966c98400'),(1010,'7c4a8d09ca3762af61e59520943dc26494f8941b'),(1050,'3e1a39bb5fe1aa10cfa68fa1286d4a6421eb8302'),(1337,'b1b3773a05c0ed0176787a4f1574ff0075f7521e'),(5555,'f7a9e24777ec23212c54d7a350bc5bea5477fdbb'),(8080,'30274c47903bd1bac7633bbf09743149ebab805f'),(9999,'b1b3773a05c0ed0176787a4f1574ff0075f7521e');
+INSERT INTO `Login_Pwd` VALUES (1000,'30274c47903bd1bac7633bbf09743149ebab805f','rw'),(1001,'6cadbca0a4c252abdeba4b2a53420f163ec32ce3','r'),(1002,'36f1372b5d5550695bfd83f4c97dac4ecdff5b80','w'),(1003,'b87ed8d4b40264bc6026b7e782fed5686a51fb80','rw'),(1004,'33464fdeb5d05b4701c3506284543292783086f5','r'),(1005,'9ba97b763f34c8904f202854a82f63b12169a395','w'),(1006,'e21dfc1b2adaa61f78992d42b085508f13147efc','rw'),(1007,'a203fafded5227a15d51e41084ee236187bd4ca1','r'),(1008,'7584b4d55131d42b8f026f109ddafaed1725187b','w'),(1009,'be40a26e2411dd9ec88218c0f53b9b8966c98400','rw'),(1010,'7c4a8d09ca3762af61e59520943dc26494f8941b','r'),(1050,'3e1a39bb5fe1aa10cfa68fa1286d4a6421eb8302','w'),(1337,'b1b3773a05c0ed0176787a4f1574ff0075f7521e','rw'),(5555,'f7a9e24777ec23212c54d7a350bc5bea5477fdbb','r'),(8080,'30274c47903bd1bac7633bbf09743149ebab805f','w'),(9999,'b1b3773a05c0ed0176787a4f1574ff0075f7521e','rw');
 /*!40000 ALTER TABLE `Login_Pwd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +55,7 @@ CREATE TABLE `Message` (
   PRIMARY KEY (`MessageID`,`Login`),
   KEY `MesKey_1` (`Login`),
   CONSTRAINT `Message_ibfk_1` FOREIGN KEY (`Login`) REFERENCES `User_Data` (`Login`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +64,7 @@ CREATE TABLE `Message` (
 
 LOCK TABLES `Message` WRITE;
 /*!40000 ALTER TABLE `Message` DISABLE KEYS */;
-INSERT INTO `Message` VALUES (34,1337,'13:57','Test message'),(35,1010,'10:10','debugging'),(36,1010,'10:10','debugging'),(37,1010,'10:10','debugging'),(38,1337,'2022','new debugging'),(39,1337,'2022','new debugging'),(40,1337,'2022','new debugging'),(41,1337,'2022','test'),(42,1337,'2022','another test'),(43,1337,'2022','t1'),(44,1337,'2022','t2'),(45,1337,'2022','t3'),(46,1337,'2022.10.27 14:10:9','t4'),(47,1337,'2022.10.27 14:10:14','t5'),(48,1337,'2022.10.27 14:10:26','НАКОНЕЦ ТО ОНО РАБОТАЕТ!'),(49,5555,'2022.10.27 14:16:36','Проверка работы программы с новым пользователем'),(50,1337,'2022.10.27 14:20:16','test 5555'),(51,1337,'2022.10.27 14:57:14','1231241'),(52,1337,'2022.10.27 15:29:15','qwer'),(53,1000,'2022.10.27 15:48:30','another machine test'),(54,1000,'2022.10.27 17:41:34','Тестовое сообщение '),(55,1000,'2022.10.28 0:12:34','asdasdfasfasgaagasf'),(56,1000,'2022.10.28 0:12:51','GrafVorobay'),(57,1337,'2022.10.28 0:13:44','ASSALAMU ALEYKUM BRAT'),(58,1009,'2022.10.28 1:16:25','REDZED - COUNTING DAYS TILL S*I*I*D*\n'),(59,1009,'2022.10.28 1:16:29','lol'),(60,1000,'2022.10.28 20:55:13','asagkljhbsdfklgjhdslkjgsfdgdsgsd'),(61,1337,'2022.10.28 21:17:57','asdasdasdasda'),(62,1337,'2022.10.28 21:19:12','\'; SELECT * FROM UUID_Table;');
+INSERT INTO `Message` VALUES (34,1337,'13:57','Test message'),(35,1010,'10:10','debugging'),(36,1010,'10:10','debugging'),(37,1010,'10:10','debugging'),(38,1337,'2022','new debugging'),(39,1337,'2022','new debugging'),(40,1337,'2022','new debugging'),(41,1337,'2022','test'),(42,1337,'2022','another test'),(43,1337,'2022','t1'),(44,1337,'2022','t2'),(45,1337,'2022','t3'),(46,1337,'2022.10.27 14:10:9','t4'),(47,1337,'2022.10.27 14:10:14','t5'),(48,1337,'2022.10.27 14:10:26','НАКОНЕЦ ТО ОНО РАБОТАЕТ!'),(49,5555,'2022.10.27 14:16:36','Проверка работы программы с новым пользователем'),(50,1337,'2022.10.27 14:20:16','test 5555'),(51,1337,'2022.10.27 14:57:14','1231241'),(52,1337,'2022.10.27 15:29:15','qwer'),(53,1000,'2022.10.27 15:48:30','another machine test'),(54,1000,'2022.10.27 17:41:34','Тестовое сообщение '),(55,1000,'2022.10.28 0:12:34','asdasdfasfasgaagasf'),(56,1000,'2022.10.28 0:12:51','GrafVorobay'),(57,1337,'2022.10.28 0:13:44','ASSALAMU ALEYKUM BRAT'),(58,1009,'2022.10.28 1:16:25','REDZED - COUNTING DAYS TILL S*I*I*D*\n'),(59,1009,'2022.10.28 1:16:29','lol'),(60,1000,'2022.10.28 20:55:13','asagkljhbsdfklgjhdslkjgsfdgdsgsd'),(61,1337,'2022.10.28 21:17:57','asdasdasdasda'),(62,1337,'2022.10.28 21:19:12','\'; SELECT * FROM UUID_Table;'),(63,1000,'2022.10.31 22:34:51','test RW'),(64,1002,'2022.10.31 22:36:0','test w'),(65,1000,'2022.10.31 22:45:15','Тест прав пользователя на чтение и запись!');
 /*!40000 ALTER TABLE `Message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,4 +154,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-31 21:27:19
+-- Dump completed on 2022-10-31 22:51:59

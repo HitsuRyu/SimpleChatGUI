@@ -23,6 +23,20 @@ void ChatWindow::on_pushButton_clicked()
     QString                 message;
     std::vector<QString>::iterator it;
 
+    q.prepare("SELECT Permission FROM Login_Pwd WHERE Login = ?");
+    q.addBindValue(m_login);
+    q.exec();
+    while (q.next())
+    {
+        if (q.value(0).toString() != "r" &&
+                q.value(0).toString() != "rw")
+        {
+            q.clear();
+            return;
+        }
+    }
+
+    q.clear();
     ui->textBrowser->clear();
     q.exec("SELECT Timestamp, Login, MessageData FROM Message");
 
@@ -51,6 +65,21 @@ void ChatWindow::on_pushButton_2_clicked()
     if (ui->textEdit->toPlainText() == "")
         return;
 
+    QSqlQuery q;
+    q.prepare("SELECT Permission FROM Login_Pwd WHERE Login = ?");
+    q.addBindValue(m_login);
+    q.exec();
+    while (q.next())
+    {
+        if (q.value(0).toString() != "w" &&
+                q.value(0).toString() != "rw")
+        {
+            q.clear();
+            return;
+        }
+    }
+
+    q.clear();
     std::string timestamp;
     time_t now = time(0);
     tm *ltm = localtime(&now);
@@ -59,7 +88,6 @@ void ChatWindow::on_pushButton_2_clicked()
     sprintf(c_timestamp, "%d.%d.%d %d:%d:%d", 1900 + ltm->tm_year, 1 + ltm->tm_mon, ltm->tm_mday, ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
     timestamp.replace(0, 20, c_timestamp);
 
-    QSqlQuery q;
     q.prepare("Insert into Message(Login, Timestamp, MessageData)"
               " VALUES(?, ?, ?);");
     q.addBindValue(m_login);
