@@ -21,6 +21,8 @@ mainwindow::mainwindow(QWidget *parent)
         qDebug() << "Cannot open Database!" ;
 
     m_flag = checkLicense();
+    m_attempts = 0;
+    m_blocked = false;
 
     activateWindow = new ActivateWindow(nullptr, m_db, m_flag);
     regWindow = new RegWindow(nullptr, m_db);
@@ -61,8 +63,19 @@ void mainwindow::on_activated()
     ui->status_label->setText("Программа активирована!");
 }
 
+void mainwindow::on_timerAlarm()
+{
+    m_attempts = 0;
+    m_blocked = false;
+}
+
 void mainwindow::on_enter_pushButton_clicked()
 {
+    if (m_blocked == true)
+    {
+        ui->status_label->setText("Блокировка на 5 секунд!");
+        return;
+    }
     m_login = ui->login_line->text();
     m_password = getSHA1(ui->passwd_line->text());
     if (!m_flag)
@@ -72,7 +85,18 @@ void mainwindow::on_enter_pushButton_clicked()
     }
 
     if (!checkLoginPwd())
-        ui->status_label->setText("Логин/Пароль неверны!");
+    {
+        m_attempts++;
+        ui->status_label->setText("Логин/Пароль неверны! Попыток: " + QString(QString::number(m_attempts)));
+        if (m_attempts == 5)
+        {
+            m_blocked = true;
+            m_timer = new QTimer();
+             connect(m_timer, SIGNAL(timeout()), this, SLOT(on_timerAlarm()));
+            m_timer->start(5000);
+        }
+    }
+
     else
     {
         chatWindow = new ChatWindow(nullptr, m_db, m_login);

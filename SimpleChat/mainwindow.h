@@ -6,6 +6,7 @@
 #include <regwindow.h>
 #include <chatwindow.h>
 #include <openssl/sha.h>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class mainwindow; }
@@ -37,6 +38,9 @@ private:
     QString         m_password;
     QString         m_uuid;
     bool            m_flag;
+    int             m_attempts;
+    bool            m_blocked;
+    QTimer          *m_timer;
 
     QString         getSHA1(QString str);
     bool            checkLoginPwd();
@@ -44,5 +48,6 @@ private:
 
 public slots:
     void            on_activated();
+    void            on_timerAlarm();
 };
 #endif // MAINWINDOW_H
